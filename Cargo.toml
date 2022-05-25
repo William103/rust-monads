@@ -1,0 +1,10 @@
+[package]
+name = "monad"
+version = "0.1.0"
+edition = "2021"
+
+[[example]]
+name = "io"
+path = "examples/io.rs"
+
+[dependencies]
