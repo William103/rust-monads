@@ -8,7 +8,7 @@ fn get_line() -> IO<String> {
 }
 
 fn print(s: String) -> IO<()> {
-    print!("{}", s);
+    println!("{}", s);
     std::io::stdout().flush().expect("something went wrong");
     IO::pure(())
 }
@@ -19,10 +19,9 @@ fn main() {
         print(message);
         x <= get_line();
         if x.len() > 10 {
-            print("Your name is too long!\n".to_string())
+            print("Your name is too long!".to_string())
         } else {
-            print("Hello, ".to_string());
-            print(x)
+            print("Hello, ".to_string() + &x)
         }
     };
 }

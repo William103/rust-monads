@@ -1,0 +1,28 @@
+#+title: Monads for Rust
+WIP implementation of Monads (and other miscellaneous Haskell goodies) in nightly Rust via GATs. It's already surprisingly effective, if a bit of a mess due for some refactoring. Working with Monads will never be as clean in Rust as it is in Haskell, just given the designs of the languages. That being said, being able to translate this Haskell code
+#+begin_src haskell
+  main :: IO ()
+  main = do
+    let message = "Enter your name: "
+    putStrLn message
+    name <- getLine
+    if length name > 10
+    then putStrLn "Your name is too long!"
+    else putStrLn $ "Hello, " ++ name
+#+end_src
+into this Rust code
+#+begin_src rust
+  fn main() {
+    let _ = mdo! {
+        let message = "Enter your name: ".to_string();
+        print(message);
+        x <= get_line();
+        if x.len() > 10 {
+            print("Your name is too long!".to_string())
+        } else {
+            print("Hello, ".to_string() + &x)
+        }
+    };
+  }
+#+end_src
+is pretty dang good. Of course, most Rustaceans won't be interested in the IO monad, but I think this is pretty cool.
