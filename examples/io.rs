@@ -1,5 +1,6 @@
-use monad::{mdo, Applicative, Monad, IO};
 use std::io::Write;
+
+use monad::{io::IO, applicative::Applicative, mdo, monad::Monad};
 
 fn get_line() -> IO<String> {
     let mut str = String::new();
