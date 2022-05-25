@@ -17,11 +17,11 @@ fn main() {
     let _ = mdo! {
         let message = "Enter your name: ".to_string();
         print(message);
-        x <= get_line();
-        if x.len() > 10 {
+        name <= get_line();
+        if name.len() > 10 {
             print("Your name is too long!".to_string())
         } else {
-            print("Hello, ".to_string() + &x)
+            print("Hello, ".to_string() + &name)
         }
     };
 }
