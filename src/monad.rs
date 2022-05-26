@@ -5,7 +5,7 @@ pub trait Monad: Applicative {
     where
         F: Fn(Self::Unwrapped) -> Self::Wrapped<B>;
 
-    fn and_then<B>(&self, other: Self::Wrapped<B>) -> Self::Wrapped<B> {
+    fn then<B>(&self, other: Self::Wrapped<B>) -> Self::Wrapped<B> {
         other
     }
 }
@@ -23,7 +23,7 @@ macro_rules! mdo {
     };
 
     { $x:expr; $( $xs:tt )* } => {
-        $x.and_then(mdo!($( $xs )*))
+        $x.then(mdo!($( $xs )*))
     };
 
     { $x:stmt; $( $xs:tt )* } => {
@@ -57,5 +57,14 @@ impl<A, E> Monad for Result<A, E> {
         F: Fn(Self::Unwrapped) -> Self::Wrapped<B>,
     {
         self.and_then(f)
+    }
+}
+
+impl<A> Monad for Box<A> {
+    fn punt<F, B>(self, f: F) -> Self::Wrapped<B>
+    where
+        F: Fn(Self::Unwrapped) -> Self::Wrapped<B>,
+    {
+        f(*self)
     }
 }

@@ -42,3 +42,15 @@ impl<A, E> Applicative for Result<A, E> {
     }
 }
 
+impl<A> Applicative for Box<A> {
+    fn pure(x: Self::Unwrapped) -> Self {
+        Box::new(x)
+    }
+
+    fn lift_a2<F, B, C>(self, other: Self::Wrapped<B>, f: F) -> Self::Wrapped<C>
+    where
+        F: Fn(Self::Unwrapped, B) -> C,
+    {
+        Box::new(f(*self, *other))
+    }
+}

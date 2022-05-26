@@ -33,3 +33,16 @@ impl<A, E> Functor for Result<A, E> {
         self.map(f)
     }
 }
+
+impl<A> Functor for Box<A> {
+    type Wrapped<B> = Box<B>;
+
+    type Unwrapped = A;
+
+    fn map<B, F>(self, f: F) -> Self::Wrapped<B>
+    where
+        F: Fn(Self::Unwrapped) -> B,
+    {
+        Box::new(f(*self))
+    }
+}

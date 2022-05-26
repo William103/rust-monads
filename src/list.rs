@@ -21,7 +21,9 @@ macro_rules! list {
 
 use List::*;
 
-use crate::{functor::Functor, applicative::Applicative, monad::Monad, semigroup::Semigroup, monoid::Monoid};
+use crate::{
+    applicative::Applicative, functor::Functor, monad::Monad, monoid::Monoid, semigroup::Semigroup,
+};
 impl<A> List<A> {
     pub fn zip_with<F, B, C>(self, other: List<B>, f: F) -> List<C>
     where
@@ -119,7 +121,7 @@ impl<A> List<A> {
         match (self, n) {
             (ls, 0) => ls,
             (Null, _) => Null,
-            (Cons(_x, xs), n) => xs.ldrop(n-1),
+            (Cons(_x, xs), n) => xs.ldrop(n - 1),
         }
     }
 }
@@ -146,7 +148,7 @@ impl<A> Functor for List<A> {
     {
         match self {
             Self::Null => Self::Wrapped::Null,
-            Self::Cons(x, xs) => Self::Wrapped::Cons(f(x), Box::new(xs.map(f))),
+            Self::Cons(x, xs) => Self::Wrapped::Cons(f(x), xs.map(|x| x.map(&f))),
         }
     }
 }

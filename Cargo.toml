@@ -7,4 +7,8 @@ edition = "2021"
 name = "io"
 path = "examples/io.rs"
 
+[[example]]
+name = "tree"
+path = "examples/tree.rs"
+
 [dependencies]
